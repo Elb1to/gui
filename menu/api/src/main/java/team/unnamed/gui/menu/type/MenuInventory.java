@@ -1,6 +1,5 @@
 package team.unnamed.gui.menu.type;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,32 +10,36 @@ import java.util.function.Predicate;
 
 public interface MenuInventory {
 
-    static MenuInventoryBuilder newBuilder(Component title) {
+    static MenuInventoryBuilder newBuilder(String title) {
         return new DefaultMenuInventoryBuilder(title);
     }
 
-    static MenuInventoryBuilder newBuilder(Component title, int rows) {
+    static MenuInventoryBuilder newBuilder(String title, int rows) {
         return new DefaultMenuInventoryBuilder(title, rows);
     }
 
-    static StringLayoutMenuInventoryBuilder newStringLayoutBuilder(Component title) {
+    static StringLayoutMenuInventoryBuilder newStringLayoutBuilder(String title) {
         return new StringLayoutMenuInventoryBuilder(title);
     }
 
-    static StringLayoutMenuInventoryBuilder newStringLayoutBuilder(Component title, int rows) {
+    static StringLayoutMenuInventoryBuilder newStringLayoutBuilder(String title, int rows) {
         return new StringLayoutMenuInventoryBuilder(title, rows);
     }
 
-    static <E> PaginatedMenuInventoryBuilder<E> newPaginatedBuilder(Class<E> entityType, Component title) {
+    static <E> PaginatedMenuInventoryBuilder<E> newPaginatedBuilder(Class<E> entityType, String title) {
         return new PaginatedMenuInventoryBuilder<>(title);
     }
 
-    static <E> PaginatedMenuInventoryBuilder<E> newPaginatedBuilder(Class<E> entityType, Component title, int rows) {
+    static <E> PaginatedMenuInventoryBuilder<E> newPaginatedBuilder(Class<E> entityType, String title, int rows) {
         return new PaginatedMenuInventoryBuilder<>(title, rows);
     }
 
+    static <E> SlottedMenuInventoryBuilder<E> newSlottedBuilder(Class<E> entityType, String title, int rows) {
+        return new SlottedMenuInventoryBuilder<>(title, rows);
+    }
+
     @NotNull
-    Component getTitle();
+    String getTitle();
 
     int getSlots();
 

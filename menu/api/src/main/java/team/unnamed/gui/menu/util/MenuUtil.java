@@ -18,10 +18,7 @@ public final class MenuUtil {
 
     static {
         try {
-            WRAPPER_CONSTRUCTOR = Class.forName(
-                    "team.unnamed.gui.menu." + ServerVersion.CURRENT
-                            + ".MenuInventoryWrapperImpl"
-            ).getConstructor(InventoryHolder.class, MenuInventory.class);
+            WRAPPER_CONSTRUCTOR = Class.forName("team.unnamed.gui.menu." + ServerVersion.CURRENT + ".MenuInventoryWrapperImpl").getConstructor(InventoryHolder.class, MenuInventory.class);
         } catch (ClassNotFoundException | NoSuchMethodException e) {
             throw new ExceptionInInitializerError("Your server version isn't supported for ungui.");
         }
@@ -40,15 +37,10 @@ public final class MenuUtil {
 
     public static @NotNull Inventory parseToInventory(MenuInventory menuInventory) {
         try {
-            MenuInventoryWrapper wrapper
-                    = (MenuInventoryWrapper) WRAPPER_CONSTRUCTOR.newInstance(
-                    null, menuInventory);
-
+            MenuInventoryWrapper wrapper = (MenuInventoryWrapper) WRAPPER_CONSTRUCTOR.newInstance(null, menuInventory);
             return wrapper.getRawInventory();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            throw new ExceptionInInitializerError(
-                    "An error has occurred while creating menu "
-                            + menuInventory.getTitle());
+            throw new ExceptionInInitializerError("An error has occurred while creating menu " + menuInventory.getTitle());
         }
     }
 
@@ -58,17 +50,11 @@ public final class MenuUtil {
         }
 
         InventoryHolder holder = inventory.getHolder();
-
-        return holder instanceof MenuInventoryWrapper
-                || inventory instanceof MenuInventoryWrapper;
+        return holder instanceof MenuInventoryWrapper || inventory instanceof MenuInventoryWrapper;
     }
 
     public static MenuInventoryWrapper getAsWrapper(Inventory inventory) {
         InventoryHolder holder = inventory.getHolder();
-
-        return holder == null ?
-                (MenuInventoryWrapper) inventory :
-                (MenuInventoryWrapper) holder;
+        return holder == null ? (MenuInventoryWrapper) inventory : (MenuInventoryWrapper) holder;
     }
-
 }

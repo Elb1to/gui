@@ -15,10 +15,7 @@ public final class PaginatedMenuUtil {
         throw new UnsupportedOperationException();
     }
 
-    public static <E> Inventory createPage(
-            Inventory delegate,
-            PaginatedMenuInventory<E> menuInventory
-    ) {
+    public static <E> Inventory createPage(Inventory delegate, PaginatedMenuInventory<E> menuInventory) {
         int currentPage = menuInventory.getCurrentPage();
         List<E> entities = menuInventory.getEntities();
         Map<Character, ItemClickable> layoutItems = menuInventory.getLayoutItems();
@@ -38,7 +35,7 @@ public final class PaginatedMenuUtil {
                 ItemClickable itemClickable = null;
 
                 switch (c) {
-                    case 'e': {
+                    case 'e' -> {
                         if (entityIndex >= entitiesSize) {
                             if (itemIfNoEntities != null)
                                 itemClickable = itemIfNoEntities.clone(availableSlots.get(entitySlotIndex++));
@@ -47,33 +44,24 @@ public final class PaginatedMenuUtil {
 
                         E entity = entities.get(entityIndex++);
                         itemClickable = entityParser.apply(entity).clone(availableSlots.get(entitySlotIndex++));
-                        break;
                     }
-                    case 'n': {
-                        itemClickable = getInteractPageItem(
-                                currentPage < menuInventory.getMaxPages(),
-                                currentPage, currentPage + 1, currentSlot,
-                                menuInventory, menuInventory.getNextPageItem(),
-                                menuInventory.getItemIfNoNextPage()
-                        );
-                        break;
-                    }
-                    case 'p': {
-                        itemClickable = getInteractPageItem(
-                                currentPage > 1,
-                                currentPage, currentPage - 1, currentSlot,
-                                menuInventory, menuInventory.getPreviousPageItem(),
-                                menuInventory.getItemIfNoPreviousPage()
-                        );
-                        break;
-                    }
-                    default: {
+                    case 'n' -> itemClickable = getInteractPageItem(
+                            currentPage < menuInventory.getMaxPages(),
+                            currentPage, currentPage + 1, currentSlot,
+                            menuInventory, menuInventory.getNextPageItem(),
+                            menuInventory.getItemIfNoNextPage()
+                    );
+                    case 'p' -> itemClickable = getInteractPageItem(
+                            currentPage > 1,
+                            currentPage, currentPage - 1, currentSlot,
+                            menuInventory, menuInventory.getPreviousPageItem(),
+                            menuInventory.getItemIfNoPreviousPage()
+                    );
+                    default -> {
                         ItemClickable layoutItem = layoutItems.get(c);
-
                         if (layoutItem != null) {
                             itemClickable = layoutItem.clone(currentSlot);
                         }
-                        break;
                     }
                 }
 
@@ -115,5 +103,4 @@ public final class PaginatedMenuUtil {
 
         return itemClickable;
     }
-
 }

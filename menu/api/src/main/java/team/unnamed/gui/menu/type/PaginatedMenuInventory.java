@@ -1,6 +1,5 @@
 package team.unnamed.gui.menu.type;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.menu.item.ItemClickable;
 
@@ -27,7 +26,7 @@ public class PaginatedMenuInventory<E> extends DefaultMenuInventory {
     private final ItemClickable itemIfNoNextPage;
 
     protected PaginatedMenuInventory(
-            Component title, int slots,
+            String title, int slots,
             List<ItemClickable> items,
             Predicate<Inventory> openAction,
             Predicate<Inventory> closeAction,
@@ -126,5 +125,4 @@ public class PaginatedMenuInventory<E> extends DefaultMenuInventory {
                 itemIfNoPreviousPage, itemIfNoNextPage
         );
     }
-
 }

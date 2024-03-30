@@ -9,10 +9,7 @@ public class ItemClickable {
     private final ItemStack itemStack;
     private final ItemClickableAction action;
 
-    private ItemClickable(
-            int slot, ItemStack itemStack,
-            ItemClickableAction action
-    ) {
+    private ItemClickable(int slot, ItemStack itemStack, ItemClickableAction action) {
         this.slot = slot;
         this.itemStack = itemStack;
         this.action = action;
@@ -30,8 +27,7 @@ public class ItemClickable {
         return of(slot, itemStack, ItemClickableAction.CANCEL_CLICK);
     }
 
-    public static ItemClickable of(int slot, ItemStack itemStack,
-                                   ItemClickableAction action) {
+    public static ItemClickable of(int slot, ItemStack itemStack, ItemClickableAction action) {
         return new ItemClickable(slot, itemStack, action);
     }
 

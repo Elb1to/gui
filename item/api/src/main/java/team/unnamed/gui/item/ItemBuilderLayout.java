@@ -1,8 +1,5 @@
 package team.unnamed.gui.item;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -14,19 +11,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static team.unnamed.validate.Validate.isNotNull;
 
-abstract class ItemBuilderLayout<T extends ItemBuilder>
-        implements ItemBuilder {
+abstract class ItemBuilderLayout<T extends ItemBuilder> implements ItemBuilder {
 
     protected final Material material;
     private final int amount;
     private final byte data;
 
-    private Component name;
-    private List<Component> lore;
+    private String name;
+    private List<String> lore;
     private Map<Enchantment, Integer> enchantments;
     private List<ItemFlag> flags;
     private boolean unbreakable;
@@ -41,23 +36,23 @@ abstract class ItemBuilderLayout<T extends ItemBuilder>
     }
 
     @Override
-    public ItemBuilder name(Component name) {
+    public ItemBuilder name(String name) {
         isNotNull(name, "Item name cannot be null.");
-        this.name = Component.empty().decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE).append(name);
+        this.name = isNotNull(name, "Item name cannot be null.");
         return back();
     }
 
     @Override
-    public ItemBuilder lore(List<Component> lore) {
+    public ItemBuilder lore(List<String> lore) {
         isNotNull(lore, "Item lore cannot be null.");
-        this.lore = lore.stream().map(line -> Component.empty().decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE).append(line)).collect(Collectors.toList());
+        this.lore = isNotNull(lore, "Item lore cannot be null.");
         return back();
     }
 
     @Override
-    public ItemBuilder lore(Component... lines) {
+    public ItemBuilder lore(String... lines) {
         isNotNull(lines, "Item lore cannot be null.");
-        this.lore = lore.stream().map(line -> Component.empty().decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE).append(line)).collect(Collectors.toList());
+        this.lore = Arrays.asList(isNotNull(lines, "Item lore cannot be null."));
         return back();
     }
 
@@ -105,8 +100,8 @@ abstract class ItemBuilderLayout<T extends ItemBuilder>
 
         enchantments.forEach((enchantment, level) -> meta.addEnchant(enchantment, level, true));
 
-        meta.displayName(name);
-        meta.lore(lore);
+        meta.setDisplayName(name);
+        meta.setLore(lore);
 
         int currentVersion = ServerVersion.CURRENT.getMinor();
 

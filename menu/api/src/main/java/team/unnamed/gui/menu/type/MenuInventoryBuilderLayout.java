@@ -1,6 +1,5 @@
 package team.unnamed.gui.menu.type;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.menu.item.ItemClickable;
 import team.unnamed.gui.menu.util.MenuUtil;
@@ -12,10 +11,9 @@ import java.util.function.Predicate;
 import static team.unnamed.validate.Validate.isNotNull;
 import static team.unnamed.validate.Validate.isState;
 
-abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
-        implements MenuInventoryBuilder {
+abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder> implements MenuInventoryBuilder {
 
-    protected final Component title;
+    protected final String title;
     protected final int slots;
     private final int rows;
 
@@ -25,13 +23,12 @@ abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
     protected boolean canIntroduceItems;
     protected boolean canDragItems;
 
-    protected MenuInventoryBuilderLayout(Component title) {
+    protected MenuInventoryBuilderLayout(String title) {
         this(title, 6);
     }
 
-    protected MenuInventoryBuilderLayout(Component title, int rows) {
-        isState(rows > 0 && rows <= 6,
-                "Rows must be major than 0 and minor than 6");
+    protected MenuInventoryBuilderLayout(String title, int rows) {
+        isState(rows > 0 && rows <= 6, "Rows must be major than 0 and minor than 6");
         this.title = isNotNull(title, "Title cannot be null.");
         this.slots = rows * 9;
         this.rows = rows;
@@ -52,12 +49,10 @@ abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
 
     @Override
     public T fillRow(ItemClickable item, int row) {
-        isState(row > 0 && row <= 6,
-                "Row must be major than 0 and minor than 6");
+        isState(row > 0 && row <= 6, "Row must be major than 0 and minor than 6");
         isNotNull(item, "Item cannot be null.");
 
         int indexStart = row == 1 ? 0 : (row - 1) * 9;
-
         for (int slot = indexStart; slot < indexStart + 9; slot++) {
             this.items.set(slot, item.clone(slot));
         }
@@ -67,13 +62,11 @@ abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
 
     @Override
     public T fillColumn(ItemClickable item, int column) {
-        isState(column > 0 && column <= 9,
-                "Column must be major than 0 and minor than 9");
+        isState(column > 0 && column <= 9, "Column must be major than 0 and minor than 9");
         isNotNull(item, "Item cannot be null.");
 
         int indexStart = column - 1;
         int indexEnd = (slots - 9) + column;
-
         for (int slot = indexStart; slot <= indexEnd; slot += 9) {
             this.items.set(slot, item.clone(slot));
         }
@@ -114,7 +107,6 @@ abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
     @Override
     public T item(ItemClickable item) {
         isNotNull(item, "Item cannot be null.");
-
         this.items.set(item.getSlot(), item);
 
         return back();
@@ -159,7 +151,6 @@ abstract class MenuInventoryBuilderLayout<T extends MenuInventoryBuilder>
 
     protected Inventory internalBuild(MenuInventory menuInventory) {
         Inventory inventory = MenuUtil.parseToInventory(menuInventory);
-
         for (ItemClickable itemClickable : items) {
             if (itemClickable == null) {
                 continue;

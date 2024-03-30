@@ -1,25 +1,28 @@
 package team.unnamed.gui.menu.type;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.menu.item.ItemClickable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static team.unnamed.validate.Validate.isNotNull;
 import static team.unnamed.validate.Validate.isState;
 
-public class StringLayoutMenuInventoryBuilder
-        extends MenuInventoryBuilderLayout<StringLayoutMenuInventoryBuilder> {
+public class StringLayoutMenuInventoryBuilder extends MenuInventoryBuilderLayout<StringLayoutMenuInventoryBuilder> {
 
     protected final Map<Character, ItemClickable> layoutItems;
     protected final List<String> layoutLines;
+    protected List<Integer> itemSlots = null;
 
-    protected StringLayoutMenuInventoryBuilder(Component title) {
+    protected StringLayoutMenuInventoryBuilder(String title) {
         this(title, 6);
     }
 
-    protected StringLayoutMenuInventoryBuilder(Component title, int rows) {
+    protected StringLayoutMenuInventoryBuilder(String title, int rows) {
         super(title, rows);
         this.layoutLines = new ArrayList<>(rows);
         this.layoutItems = new HashMap<>();
@@ -33,8 +36,7 @@ public class StringLayoutMenuInventoryBuilder
     public StringLayoutMenuInventoryBuilder layoutLines(Iterable<String> lines) {
         for (String line : lines) {
             line = line.trim();
-            isState(line.length() == 9,
-                    "Cannot add layout line '" + line + "' because length is minor than 9");
+            isState(line.length() == 9, "Cannot add layout line '" + line + "' because length is minor than 9");
             this.layoutLines.add(line.trim());
         }
 
@@ -52,7 +54,6 @@ public class StringLayoutMenuInventoryBuilder
         for (String layoutLine : this.layoutLines) {
             for (char c : layoutLine.toCharArray()) {
                 ItemClickable itemClickable = this.layoutItems.get(c);
-
                 if (itemClickable == null) {
                     slotIndex++;
                     continue;
@@ -70,5 +71,4 @@ public class StringLayoutMenuInventoryBuilder
     protected StringLayoutMenuInventoryBuilder back() {
         return this;
     }
-
 }

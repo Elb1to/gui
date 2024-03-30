@@ -1,6 +1,5 @@
 package team.unnamed.gui.menu.type;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.inventory.Inventory;
 import team.unnamed.gui.menu.item.ItemClickable;
 import team.unnamed.gui.menu.util.MenuUtil;
@@ -14,8 +13,7 @@ import java.util.function.Function;
 
 import static team.unnamed.validate.Validate.isNotNull;
 
-public class PaginatedMenuInventoryBuilder<E>
-        extends StringLayoutMenuInventoryBuilder {
+public class PaginatedMenuInventoryBuilder<E> extends StringLayoutMenuInventoryBuilder {
 
     private int entitySlotFrom;
     private int entitySlotTo;
@@ -29,11 +27,11 @@ public class PaginatedMenuInventoryBuilder<E>
     private ItemClickable itemIfNoPreviousPage;
     private ItemClickable itemIfNoNextPage;
 
-    protected PaginatedMenuInventoryBuilder(Component title) {
+    protected PaginatedMenuInventoryBuilder(String title) {
         super(title);
     }
 
-    protected PaginatedMenuInventoryBuilder(Component title, int rows) {
+    protected PaginatedMenuInventoryBuilder(String title, int rows) {
         super(title, rows);
     }
 
@@ -84,14 +82,12 @@ public class PaginatedMenuInventoryBuilder<E>
     }
 
     public PaginatedMenuInventoryBuilder<E> itemIfNoPreviousPage(ItemClickable itemIfNoPreviousPage) {
-        this.itemIfNoPreviousPage = isNotNull(itemIfNoPreviousPage,
-                "Item if no previos page cannot be null.");
+        this.itemIfNoPreviousPage = isNotNull(itemIfNoPreviousPage, "Item if no previos page cannot be null.");
         return this;
     }
 
     public PaginatedMenuInventoryBuilder<E> itemIfNoNextPage(ItemClickable itemIfNoNextPage) {
-        this.itemIfNoNextPage = isNotNull(itemIfNoNextPage,
-                "Item if no next page cannot be null.");
+        this.itemIfNoNextPage = isNotNull(itemIfNoNextPage, "Item if no next page cannot be null.");
         return this;
     }
 
@@ -146,5 +142,4 @@ public class PaginatedMenuInventoryBuilder<E>
     protected PaginatedMenuInventoryBuilder<E> back() {
         return this;
     }
-
 }

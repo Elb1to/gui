@@ -1,6 +1,5 @@
 package team.unnamed.gui.item;
 
-import net.kyori.adventure.text.Component;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -12,11 +11,11 @@ import java.util.Map;
 
 public interface ItemBuilder {
 
-    ItemBuilder name(Component name);
+    ItemBuilder name(String name);
 
-    ItemBuilder lore(List<Component> lore);
+    ItemBuilder lore(List<String> lore);
 
-    ItemBuilder lore(Component... lines);
+    ItemBuilder lore(String... lines);
 
     ItemBuilder enchantments(Map<Enchantment, Integer> enchantments);
 
